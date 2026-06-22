@@ -1,17 +1,26 @@
 <div class="main-container">
   <h1>Color Memory</h1>
   <div class="shade-picker">
-    <div  class="color-shade">
+    <div class="color-shade">
       <div *ngIf="colorShadeVisible" class="shade" [style.backgroundColor]="systemRgbString()">
-        <div class="answer" *ngIf="showAnswer">
-          <p>R:{{systemColor.red}} G:{{systemColor.green}} B:{{systemColor.blue}}</p>
+        <div class="answer-preview" *ngIf="showAnswer">
+          <p class="rgb-code" [style.color]="systemColor.previewTextColor">R:{{systemColor.red}} G:{{systemColor.green}}
+            B:{{systemColor.blue}}</p>
+        </div>
+      </div>
+
+      <div *ngIf="!colorShadeVisible" class="shade" [style.backgroundColor]="'#ffffff'">
+        <div class="answer-preview" *ngIf="showAnswer">
+          <p class="rgb-code" [style.color]="systemColor.previewTextColor">R:{{systemColor.red}} G:{{systemColor.green}}
+            B:{{systemColor.blue}}</p>
         </div>
       </div>
     </div>
 
     <div class="color-picker-container">
       <div class="color-preview" [style.backgroundColor]="rgbString()">
-        {{ `R:${this.userColor.red} G:${this.userColor.green}  B:${this.userColor.blue}` }}
+        <p class="rgb-code" [style.color]="userColor.previewTextColor">{{ `R:${this.userColor.red}
+          G:${this.userColor.green} B:${this.userColor.blue}` }}</p>
       </div>
 
 
@@ -19,7 +28,8 @@
         <label>
           <div class="slider-wrapper">
             R:
-            <input type="range" min="0" max="255" [(ngModel)]="userColor.red" class="red-slider">
+            <input type="range" min="0" max="255" [(ngModel)]="userColor.red" class="red-slider"
+              [disabled]="showAnswer">
             <span class="value-label">{{ userColor.red }}</span>
           </div>
         </label>
@@ -27,7 +37,8 @@
         <label>
           <div class="slider-wrapper">
             G:
-            <input type="range" min="0" max="255" [(ngModel)]="userColor.green" class="green-slider">
+            <input type="range" min="0" max="255" [(ngModel)]="userColor.green" class="green-slider"
+              [disabled]="showAnswer">
             <span class="value-label">{{ userColor.green }}</span>
           </div>
         </label>
@@ -35,7 +46,8 @@
         <label>
           <div class="slider-wrapper">
             B:
-            <input type="range" min="0" max="255" [(ngModel)]="userColor.blue" class="blue-slider">
+            <input type="range" min="0" max="255" [(ngModel)]="userColor.blue" class="blue-slider"
+              [disabled]="showAnswer">
             <span class="value-label">{{ userColor.blue }}</span>
           </div>
         </label>
@@ -44,6 +56,13 @@
 
     </div>
   </div>
+
+  <div class="similarity-container">
+    <div *ngIf="showAnswer">
+      {{colorSimilarity}} % Match
+    </div>
+  </div>
+
 
 
   <div class="buttons">
